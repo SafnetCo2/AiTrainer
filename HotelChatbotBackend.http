@@ -1,0 +1,6 @@
+@HotelChatbotBackend_HostAddress = http://localhost:5165
+
+GET {{HotelChatbotBackend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
