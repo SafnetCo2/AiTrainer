@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "P0e24AtU+BEk3g7fIYsqj3atyvIFpzTO1MuUZR5vWRQ=",
+  "Source": "HotelChatbotBackend",
+  "BasePath": "_content/HotelChatbotBackend",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

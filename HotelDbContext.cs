@@ -1,10 +1,21 @@
-using Microsoft.EntityFrameworkCore;
-
-public class HotelDbContext : DbContext
+namespace HotelChatbotBackend
 {
-    public HotelDbContext(DbContextOptions<HotelDbContext> options) : base(options) { }
+    using Microsoft.EntityFrameworkCore;
 
-    public DbSet<Room> Rooms { get; set; }
-    public DbSet<Booking> Bookings { get; set; }
-    public DbSet<ChatMessage> ChatMessages { get; set; }
+    public class HotelDbContext : DbContext
+    {
+        public HotelDbContext(DbContextOptions<HotelDbContext> options) : base(options) { }
+
+        public DbSet<Room> Rooms { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Room>()
+                .Property(r => r.Price)
+                .HasColumnType("decimal(18,2)");
+
+            base.OnModelCreating(modelBuilder);
+        }
+    }
 }

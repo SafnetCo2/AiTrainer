@@ -1,44 +1,24 @@
+using Microsoft.EntityFrameworkCore;
+using HotelChatbotBackend;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+// Step 1: Add DbContext to the service container and configure it to use MySQL
+builder.Services.AddDbContext<HotelDbContext>(options =>
+    options.UseMySql(builder.Configuration.GetConnectionString("HotelDb"),
+    new MySqlServerVersion(new Version(8, 0, 23)))); // Use the correct MySQL version
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+// Step 2: Setup Routes
+app.MapGet("/", () => "Hotel Chatbot API Running!");
+
+// Example route to access bookings (assuming you will later add controllers)
+app.MapGet("/bookings", async (HotelDbContext dbContext) =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    var bookings = await dbContext.Bookings.Include(b => b.Room).ToListAsync();
+    return Results.Ok(bookings);
+});
 
-app.UseHttpsRedirection();
-
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
-
+// Run the application
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
