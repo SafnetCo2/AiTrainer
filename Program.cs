@@ -5,7 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Step 1: Add DbContext to the service container and configure it to use MySQL
 builder.Services.AddDbContext<HotelDbContext>(options =>
-    options.UseMySql(builder.Configuration.GetConnectionString("HotelDb"),
+    options.UseMySql(builder.Configuration.GetConnectionString("hotel_chatbot"),
     new MySqlServerVersion(new Version(8, 0, 23)))); // Use the correct MySQL version
 
 var app = builder.Build();
