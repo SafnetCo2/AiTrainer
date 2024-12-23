@@ -1,33 +1,32 @@
-# Use the official .NET SDK image to build the app
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-WORKDIR /app
-EXPOSE 80
-
-# Build the app from source code
+# Use the official .NET SDK image for .NET 8.0
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-WORKDIR /src
 
-# Copy the .csproj file (use the correct path here)
-COPY HotelChatbotBackend.csproj ./ 
+# Set the working directory
+WORKDIR /app
+
+# Copy project files into the container
+COPY . .
 
 # Restore dependencies
 RUN dotnet restore "HotelChatbotBackend.csproj"
 
-# Copy the rest of the source code
-COPY . .
-
-# Set the working directory
-WORKDIR "/src/HotelChatbotBackend"
-
-# Build the app
+# Build the application
 RUN dotnet build "HotelChatbotBackend.csproj" -c Release -o /app/build
 
-# Publish the app
-FROM build AS publish
+# Publish the application
 RUN dotnet publish "HotelChatbotBackend.csproj" -c Release -o /app/publish
 
-# Final stage - copy published files and set the entry point
-FROM base AS final
+# Use the official .NET runtime image for .NET 8.0
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+
+# Set the working directory for the runtime
 WORKDIR /app
-COPY --from=publish /app/publish .
+
+# Copy published output from the build stage
+COPY --from=build /app/publish .
+
+# Expose the application's port
+EXPOSE 80
+
+# Set the entry point for the application
 ENTRYPOINT ["dotnet", "HotelChatbotBackend.dll"]
