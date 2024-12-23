@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: HotelChatbotBackend
+    env: docker
+    dockerfilePath: Dockerfile
+    buildCommand: ""
+    startCommand: "dotnet HotelChatbotBackend.dll"
+    plan: free 
