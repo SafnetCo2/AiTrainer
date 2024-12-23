@@ -1,15 +1,19 @@
-public class ChatMessage
+namespace HotelChatbotBackend
 {
-    public int Id { get; set; }
-    public required string UserMessage { get; set; } // Added required modifier
-    public required string BotResponse { get; set; } // Added required modifier
-    public DateTime Timestamp { get; set; }
+    using Microsoft.EntityFrameworkCore;  // Required for Entity Framework operations
+    using System.Collections.Generic;   // Required for List<T>
 
-    // Constructor to initialize non-nullable properties
-    public ChatMessage(string userMessage, string botResponse)
+    public class ChatMessage
     {
-        UserMessage = userMessage;
-        BotResponse = botResponse;
-        Timestamp = DateTime.UtcNow; // Set the current timestamp
+        public int Id { get; set; }
+        public int UserId { get; set; }
+
+        public required string Message { get; set; }  // Marking as required
+
+        // Static method to fetch all chat messages asynchronously
+        public static async Task<List<ChatMessage>> GetChatMessagesAsync(HotelDbContext dbContext)
+        {
+            return await dbContext.ChatMessages.ToListAsync();
+        }
     }
 }

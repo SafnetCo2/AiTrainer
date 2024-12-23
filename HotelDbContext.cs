@@ -1,21 +1,17 @@
-namespace HotelChatbotBackend
+using Microsoft.EntityFrameworkCore;  // Required for DbContext and DbSet<>
+using HotelChatbotBackend;  // Ensure this import for all the entities
+
+public class HotelDbContext : DbContext
 {
-    using Microsoft.EntityFrameworkCore;
+    public DbSet<Room> Rooms { get; set; }
+    public DbSet<Booking> Bookings { get; set; }
+    public DbSet<ChatMessage> ChatMessages { get; set; }
+    public DbSet<User> Users { get; set; }  // Add DbSet for User
+    public DbSet<LoyaltyProgram> LoyaltyPrograms { get; set; }  // Add DbSet for LoyaltyProgram
+    //public DbSet<Staff> Staffs { get; set; }
 
-    public class HotelDbContext : DbContext
-    {
-        public HotelDbContext(DbContextOptions<HotelDbContext> options) : base(options) { }
+    public DbSet<HotelStaff> HotelStaffs { get; set; }  // Add DbSet for HotelStaff
 
-        public DbSet<Room> Rooms { get; set; }
-        public DbSet<Booking> Bookings { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Room>()
-                .Property(r => r.Price)
-                .HasColumnType("decimal(18,2)");
-
-            base.OnModelCreating(modelBuilder);
-        }
-    }
+    // Constructor to pass the options to the base class
+    public HotelDbContext(DbContextOptions<HotelDbContext> options) : base(options) { }
 }

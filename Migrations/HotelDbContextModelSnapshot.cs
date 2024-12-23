@@ -39,7 +39,7 @@ namespace HotelChatbotBackend.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("Bookings");
+                    b.ToTable("Bookings", (string)null);
                 });
 
             modelBuilder.Entity("Room", b =>
@@ -61,7 +61,7 @@ namespace HotelChatbotBackend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Rooms");
+                    b.ToTable("Rooms", (string)null);
                 });
 
             modelBuilder.Entity("Booking", b =>

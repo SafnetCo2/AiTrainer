@@ -1,17 +1,20 @@
-public class Booking
+namespace HotelChatbotBackend
 {
-    public int Id { get; set; }
-    public string? GuestName { get; set; }  // Nullable
-    public int RoomId { get; set; }  // Foreign key to Room
-    public Room? Room { get; set; }  // Nullable
-
-    // Parameterless constructor for Entity Framework
-    public Booking() { }
-
-    // Constructor to create a Booking with a fully initialized Room
-    public Booking(string guestName, string roomName, string roomDescription, decimal roomPrice)
+    public class Booking
     {
-        GuestName = guestName;
-        Room = new Room(roomName, roomDescription, roomPrice);  // Room initialized with all required properties
+        public int Id { get; set; }
+        public string? GuestName { get; set; }
+        public int RoomId { get; set; }
+        public Room? Room { get; set; }
+        public int? UserId { get; set; }
+        public User? User { get; set; }
+
+        public Booking() { }
+
+        public Booking(string guestName, string roomName, string roomDescription, decimal roomPrice)
+        {
+            GuestName = guestName;
+            Room = new Room(roomName, roomDescription, roomPrice);
+        }
     }
 }

@@ -1,18 +1,15 @@
 public class Room
 {
     public int Id { get; set; }
-    public string? Name { get; set; }  // Nullable
-    public string? Description { get; set; }  // Nullable
+    public string Name { get; set; }
+    public string Description { get; set; }
     public decimal Price { get; set; }
 
-    // Constructor to initialize Room with required properties
+    // Add a constructor that takes 3 arguments
     public Room(string name, string description, decimal price)
     {
         Name = name;
         Description = description;
         Price = price;
     }
-
-    // Parameterless constructor for Entity Framework
-    public Room() { }
 }
