@@ -76,7 +76,6 @@ app.MapPost("/staff", async (HotelDbContext dbContext, HotelStaff staff) =>
     return Results.Created($"/staff/{staff.Id}", staff);  // Returning a Created result with the staff's ID
 });
 
-
 // Log application URL for deployment
 Console.WriteLine($"Your application is live and listening on: http://localhost:{port}");
 
