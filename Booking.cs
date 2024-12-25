@@ -1,20 +1,25 @@
-namespace HotelChatbotBackend
+// File: Booking.cs
+// Date: December 25, 2024
+
+public class Booking
 {
-    public class Booking
-    {
-        public int Id { get; set; }
-        public string? GuestName { get; set; }
-        public int RoomId { get; set; }
-        public Room? Room { get; set; }
-        public int? UserId { get; set; }
-        public User? User { get; set; }
+    public int Id { get; set; }
+    public DateTime StartDate { get; set; }
+    public DateTime EndDate { get; set; }
+    public string Status { get; set; } = string.Empty;
+    public int UserId { get; set; }
 
-        public Booking() { }
+    // Mark User as required
+    public required User User { get; set; }  // Added 'required' modifier
 
-        public Booking(string guestName, string roomName, string roomDescription, decimal roomPrice)
-        {
-            GuestName = guestName;
-            Room = new Room(roomName, roomDescription, roomPrice);
-        }
-    }
+    public int RoomId { get; set; }
+
+    // Mark Room as required
+    public required Room Room { get; set; }  // Added 'required' modifier
+
+    // Navigation property for ChatMessages
+    public List<ChatMessage> ChatMessages { get; set; } = new List<ChatMessage>();
+
+    // Add CreatedAt property to store the date the booking was created
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }

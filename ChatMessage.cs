@@ -1,19 +1,16 @@
-namespace HotelChatbotBackend
+// File: ChatMessage.cs
+// Date: December 25, 2024
+
+public class ChatMessage
 {
-    using Microsoft.EntityFrameworkCore;  // Required for Entity Framework operations
-    using System.Collections.Generic;   // Required for List<T>
+    public int Id { get; set; }
+    public string UserMessage { get; set; } = string.Empty;
+    public string BotResponse { get; set; } = string.Empty;
+    public int BookingId { get; set; }
 
-    public class ChatMessage
-    {
-        public int Id { get; set; }
-        public int UserId { get; set; }
+    // Mark Booking as required
+    public required Booking Booking { get; set; }  // Added 'required' modifier
 
-        public required string Message { get; set; }  // Marking as required
-
-        // Static method to fetch all chat messages asynchronously
-        public static async Task<List<ChatMessage>> GetChatMessagesAsync(HotelDbContext dbContext)
-        {
-            return await dbContext.ChatMessages.ToListAsync();
-        }
-    }
+    // Add CreatedAt property to store the date the message was created
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }
